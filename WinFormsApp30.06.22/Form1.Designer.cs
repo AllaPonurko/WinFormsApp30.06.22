@@ -32,16 +32,18 @@ namespace WinFormsApp30._06._22
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.panelTools = new System.Windows.Forms.Panel();
-            this.btnColor1 = new System.Windows.Forms.Button();
-            this.btnColor3 = new System.Windows.Forms.Button();
-            this.btnColor2 = new System.Windows.Forms.Button();
-            this.btnColor7 = new System.Windows.Forms.Button();
-            this.btnColor6 = new System.Windows.Forms.Button();
-            this.btnColor5 = new System.Windows.Forms.Button();
-            this.btnColor4 = new System.Windows.Forms.Button();
-            this.btnColor8 = new System.Windows.Forms.Button();
-            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.btnColor8 = new System.Windows.Forms.Button();
+            this.btnColor4 = new System.Windows.Forms.Button();
+            this.btnColor5 = new System.Windows.Forms.Button();
+            this.btnColor6 = new System.Windows.Forms.Button();
+            this.btnColor7 = new System.Windows.Forms.Button();
+            this.btnColor2 = new System.Windows.Forms.Button();
+            this.btnColor3 = new System.Windows.Forms.Button();
+            this.btnColor1 = new System.Windows.Forms.Button();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -53,7 +55,9 @@ namespace WinFormsApp30._06._22
             this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.btnClear = new System.Windows.Forms.Button();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).BeginInit();
             this.panelTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -63,9 +67,9 @@ namespace WinFormsApp30._06._22
             // pictureBoxPaint
             // 
             this.pictureBoxPaint.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.pictureBoxPaint.Location = new System.Drawing.Point(0, 28);
+            this.pictureBoxPaint.Location = new System.Drawing.Point(31, 28);
             this.pictureBoxPaint.Name = "pictureBoxPaint";
-            this.pictureBoxPaint.Size = new System.Drawing.Size(649, 427);
+            this.pictureBoxPaint.Size = new System.Drawing.Size(618, 427);
             this.pictureBoxPaint.TabIndex = 0;
             this.pictureBoxPaint.TabStop = false;
             this.pictureBoxPaint.Click += new System.EventHandler(this.pictureBoxPaint_Click);
@@ -76,6 +80,7 @@ namespace WinFormsApp30._06._22
             // panelTools
             // 
             this.panelTools.AutoSize = true;
+            this.panelTools.Controls.Add(this.btnExit);
             this.panelTools.Controls.Add(this.btnClear);
             this.panelTools.Controls.Add(this.label1);
             this.panelTools.Controls.Add(this.trackBar1);
@@ -92,65 +97,51 @@ namespace WinFormsApp30._06._22
             this.panelTools.Size = new System.Drawing.Size(155, 427);
             this.panelTools.TabIndex = 1;
             // 
-            // btnColor1
+            // btnExit
             // 
-            this.btnColor1.BackColor = System.Drawing.Color.Red;
-            this.btnColor1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor1.Location = new System.Drawing.Point(7, 9);
-            this.btnColor1.Name = "btnColor1";
-            this.btnColor1.Size = new System.Drawing.Size(25, 23);
-            this.btnColor1.TabIndex = 0;
-            this.btnColor1.UseVisualStyleBackColor = false;
+            this.btnExit.Location = new System.Drawing.Point(0, 401);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(152, 23);
+            this.btnExit.TabIndex = 11;
+            this.btnExit.Text = "Exit";
+            this.btnExit.UseVisualStyleBackColor = true;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // btnColor3
+            // btnClear
             // 
-            this.btnColor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.btnColor3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor3.Location = new System.Drawing.Point(69, 9);
-            this.btnColor3.Name = "btnColor3";
-            this.btnColor3.Size = new System.Drawing.Size(25, 23);
-            this.btnColor3.TabIndex = 1;
-            this.btnColor3.UseVisualStyleBackColor = false;
+            this.btnClear.Location = new System.Drawing.Point(0, 371);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(152, 23);
+            this.btnClear.TabIndex = 10;
+            this.btnClear.Text = "Очистить";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // btnColor2
+            // label1
             // 
-            this.btnColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            this.btnColor2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor2.Location = new System.Drawing.Point(38, 9);
-            this.btnColor2.Name = "btnColor2";
-            this.btnColor2.Size = new System.Drawing.Size(25, 23);
-            this.btnColor2.TabIndex = 2;
-            this.btnColor2.UseVisualStyleBackColor = false;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 78);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 15);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Толщина линии";
             // 
-            // btnColor7
+            // trackBar1
             // 
-            this.btnColor7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.btnColor7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor7.Location = new System.Drawing.Point(69, 38);
-            this.btnColor7.Name = "btnColor7";
-            this.btnColor7.Size = new System.Drawing.Size(25, 23);
-            this.btnColor7.TabIndex = 3;
-            this.btnColor7.UseVisualStyleBackColor = false;
+            this.trackBar1.Location = new System.Drawing.Point(4, 111);
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(136, 45);
+            this.trackBar1.TabIndex = 8;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
-            // btnColor6
+            // btnColor8
             // 
-            this.btnColor6.BackColor = System.Drawing.Color.Blue;
-            this.btnColor6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor6.Location = new System.Drawing.Point(38, 38);
-            this.btnColor6.Name = "btnColor6";
-            this.btnColor6.Size = new System.Drawing.Size(25, 23);
-            this.btnColor6.TabIndex = 4;
-            this.btnColor6.UseVisualStyleBackColor = false;
-            // 
-            // btnColor5
-            // 
-            this.btnColor5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnColor5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnColor5.Location = new System.Drawing.Point(7, 38);
-            this.btnColor5.Name = "btnColor5";
-            this.btnColor5.Size = new System.Drawing.Size(25, 23);
-            this.btnColor5.TabIndex = 5;
-            this.btnColor5.UseVisualStyleBackColor = false;
+            this.btnColor8.Location = new System.Drawing.Point(100, 38);
+            this.btnColor8.Name = "btnColor8";
+            this.btnColor8.Size = new System.Drawing.Size(25, 23);
+            this.btnColor8.TabIndex = 7;
+            this.btnColor8.UseVisualStyleBackColor = true;
+            this.btnColor8.Click += new System.EventHandler(this.btnColor8_Click);
             // 
             // btnColor4
             // 
@@ -161,30 +152,73 @@ namespace WinFormsApp30._06._22
             this.btnColor4.Size = new System.Drawing.Size(25, 23);
             this.btnColor4.TabIndex = 6;
             this.btnColor4.UseVisualStyleBackColor = false;
+            this.btnColor4.Click += new System.EventHandler(this.btnColor1_Click);
             // 
-            // btnColor8
+            // btnColor5
             // 
-            this.btnColor8.Location = new System.Drawing.Point(100, 39);
-            this.btnColor8.Name = "btnColor8";
-            this.btnColor8.Size = new System.Drawing.Size(25, 23);
-            this.btnColor8.TabIndex = 7;
-            this.btnColor8.UseVisualStyleBackColor = true;
+            this.btnColor5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnColor5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor5.Location = new System.Drawing.Point(7, 38);
+            this.btnColor5.Name = "btnColor5";
+            this.btnColor5.Size = new System.Drawing.Size(25, 23);
+            this.btnColor5.TabIndex = 5;
+            this.btnColor5.UseVisualStyleBackColor = false;
+            this.btnColor5.Click += new System.EventHandler(this.btnColor1_Click);
             // 
-            // trackBar1
+            // btnColor6
             // 
-            this.trackBar1.Location = new System.Drawing.Point(4, 111);
-            this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(136, 45);
-            this.trackBar1.TabIndex = 8;
+            this.btnColor6.BackColor = System.Drawing.Color.Blue;
+            this.btnColor6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor6.Location = new System.Drawing.Point(38, 38);
+            this.btnColor6.Name = "btnColor6";
+            this.btnColor6.Size = new System.Drawing.Size(25, 23);
+            this.btnColor6.TabIndex = 4;
+            this.btnColor6.UseVisualStyleBackColor = false;
+            this.btnColor6.Click += new System.EventHandler(this.btnColor1_Click);
             // 
-            // label1
+            // btnColor7
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 78);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 15);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Толщина линии";
+            this.btnColor7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnColor7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor7.Location = new System.Drawing.Point(69, 38);
+            this.btnColor7.Name = "btnColor7";
+            this.btnColor7.Size = new System.Drawing.Size(25, 23);
+            this.btnColor7.TabIndex = 3;
+            this.btnColor7.UseVisualStyleBackColor = false;
+            this.btnColor7.Click += new System.EventHandler(this.btnColor1_Click);
+            // 
+            // btnColor2
+            // 
+            this.btnColor2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.btnColor2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor2.Location = new System.Drawing.Point(38, 9);
+            this.btnColor2.Name = "btnColor2";
+            this.btnColor2.Size = new System.Drawing.Size(25, 23);
+            this.btnColor2.TabIndex = 2;
+            this.btnColor2.UseVisualStyleBackColor = false;
+            this.btnColor2.Click += new System.EventHandler(this.btnColor1_Click);
+            // 
+            // btnColor3
+            // 
+            this.btnColor3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.btnColor3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor3.Location = new System.Drawing.Point(69, 9);
+            this.btnColor3.Name = "btnColor3";
+            this.btnColor3.Size = new System.Drawing.Size(25, 23);
+            this.btnColor3.TabIndex = 1;
+            this.btnColor3.UseVisualStyleBackColor = false;
+            this.btnColor3.Click += new System.EventHandler(this.btnColor1_Click);
+            // 
+            // btnColor1
+            // 
+            this.btnColor1.BackColor = System.Drawing.Color.Red;
+            this.btnColor1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnColor1.Location = new System.Drawing.Point(7, 9);
+            this.btnColor1.Name = "btnColor1";
+            this.btnColor1.Size = new System.Drawing.Size(25, 23);
+            this.btnColor1.TabIndex = 0;
+            this.btnColor1.UseVisualStyleBackColor = false;
+            this.btnColor1.Click += new System.EventHandler(this.btnColor1_Click);
             // 
             // toolStrip1
             // 
@@ -222,6 +256,7 @@ namespace WinFormsApp30._06._22
             this.openToolStripButton.Name = "openToolStripButton";
             this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.openToolStripButton.Text = "&Open";
+            this.openToolStripButton.Click += new System.EventHandler(this.openToolStripButton_Click);
             // 
             // saveToolStripButton
             // 
@@ -231,6 +266,7 @@ namespace WinFormsApp30._06._22
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.saveToolStripButton.Text = "&Save";
+            this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
             // 
             // printToolStripButton
             // 
@@ -287,14 +323,9 @@ namespace WinFormsApp30._06._22
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
-            // btnClear
+            // openFileDialog1
             // 
-            this.btnClear.Location = new System.Drawing.Point(7, 370);
-            this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(145, 23);
-            this.btnClear.TabIndex = 10;
-            this.btnClear.Text = "Очистить";
-            this.btnClear.UseVisualStyleBackColor = true;
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -343,6 +374,10 @@ namespace WinFormsApp30._06._22
         private System.Windows.Forms.ToolStripButton pasteToolStripButton;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
+        private System.Windows.Forms.Button btnExit;
+        private System.Windows.Forms.ColorDialog colorDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
     }
 }
 
