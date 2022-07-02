@@ -150,7 +150,11 @@ namespace WinFormsApp30._06._22
         {
             pen.Width = trackBar1.Value;
         }
-
+        /// <summary>
+        /// сохранение изображения
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             saveFileDialog1.Filter = "Image file JPG(*.JPG)|*.jpg";
@@ -166,7 +170,11 @@ namespace WinFormsApp30._06._22
                 }
             }
         }
-
+        /// <summary>
+        /// открытие файла с изображением
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void openToolStripButton_Click(object sender, EventArgs e)
         {openFileDialog1.Filter= "Image file JPG(*.JPG)|*.jpg";
             
@@ -174,6 +182,7 @@ namespace WinFormsApp30._06._22
             {
                 //pictureBoxPaint.ImageLocation = openFileDialog1.FileName;
                 pictureBoxPaint.Image = new Bitmap(openFileDialog1.FileName);
+                //this.Controls.Add(pictureBoxPaint);
             }
         }
     }
