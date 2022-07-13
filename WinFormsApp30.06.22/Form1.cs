@@ -254,8 +254,14 @@ namespace WinFormsApp30._06._22
         /// <param name="e"></param>
         private void btnClear_Click(object sender, EventArgs e)
         {
-            g. Clear(Color.White);
-            pictureBoxPaint.Image = bitmap;
+            try
+            {
+                g.Clear(Color.White);
+                pictureBoxPaint.Image = bitmap;
+            }catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnColor1_Click(object sender, EventArgs e)
