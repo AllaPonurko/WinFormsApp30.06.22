@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace WinFormsApp30._06._22
         /// </summary>
         private bool IsClamped = false;
         Pen pen = new Pen(Color.Black,3);
+        SolidBrush Fill;
         /// <summary>
         /// создаём класс массива точек для создания рисунка
         /// </summary>
@@ -68,6 +70,14 @@ namespace WinFormsApp30._06._22
         ArrayPoints points = new ArrayPoints(2);
         Bitmap bitmap = new Bitmap(100, 100);
         Graphics g;
+        Point pointStart = new Point();
+        Point pointEnd = new Point();
+        Point toPoint = new Point();
+        Rectangle rect = new Rectangle();
+        private bool SelectRect = false;
+        private bool SelectLine = false;
+        private bool SelectCircle = false;
+        private bool SelectPaint = true;
         private void SetSize()
         {
             Rectangle rectangle = Screen.PrimaryScreen.Bounds;//позволяет установить размеры экрана
@@ -84,45 +94,149 @@ namespace WinFormsApp30._06._22
         private void pictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
             IsClamped = true;
-            pointStart = e.Location;
+            if (e.Button == MouseButtons.Right) // Если нажата правая кнопка мыши
+            {
+                rect.Width = 0;
+                rect.Height = 0;
+                rect.X = e.X;
+                rect.Y = e.Y;
+            }
+            if (e.Button == MouseButtons.Left) // Если нажата левая кнопка мыши
+            {
+                // Если рисуем линию
+                if (SelectLine)
+                {
+                    // Получаем координаты нажатия левой кнопки мыши в PictureBox
+                    pointStart.X = e.X;
+                    pointStart.Y = e.Y;
+                    toPoint = pointStart;
+                }
+                // Если рисуем прямоугольник
+                if (SelectRect)
+                {
+                    rect.Width = 0;
+                    rect.Height = 0;
+                    rect.X = e.X;
+                    rect.Y = e.Y;
+                }
+                // Если рисуем окружность
+                if (SelectCircle)
+                {
+                    rect.Height = 0;
+                    rect.Width = 0;
+                    rect.X = e.X;
+                    rect.Y = e.Y;
+                }
+            }
         }
 
         private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
             IsClamped = false;
             points.ResetPoint();
-            pointEnd = e.Location;
+            if (e.Button == MouseButtons.Right)// Если нажата правая кнопка мыши
+            {
+                g = Graphics.FromImage(bitmap);
+                g.DrawRectangle(pen, rect); // Нарисуем прямоугольник-контур для осветлённой области
+                g.Dispose();
+                pictureBoxPaint.Invalidate();
+            }
+            if (e.Button == MouseButtons.Left) // Если нажата левая кнопка мыши
+            {
+                // Рисуем в PictureBox (только в загруженном в элементе изображении)
+                g = Graphics.FromImage(bitmap);
+                if (SelectLine)
+                {
+                    pointEnd.X = e.X;
+                    pointEnd.Y = e.Y;
+                    g.DrawLine(pen, pointStart, pointEnd);
+
+                }
+                if (SelectRect)
+                {
+                    //if (Color_Fill != Color.Violet) { g.FillRectangle(Fill, rect); }
+                    // Заполнение цветом прямоугольной области ограниченной rect
+
+                    g.DrawRectangle(pen, rect);
+
+                }
+                if (SelectCircle)
+                {
+                    //if (Color_Fill != Color.Violet) { g.FillEllipse(Fill, rect); }
+                    //// Заполнение цветом эллептической области ограниченной CircleRect
+                    g.DrawEllipse(pen, rect);
+                }
+                g.Dispose();
+               pictureBoxPaint.Invalidate(); // Обновляем PictureBox
+            }
+
         }
-        private bool SelectRect = false;
-        private bool SelectLine = false;
-        private bool SelectCircle = false;
-        
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
             if (!IsClamped) return;
-            if(!SelectRect)
+            if (e.Button == MouseButtons.Right)// Если нажата правая кнопка мыши
             {
-                DrawRect();
+                rect.Width = e.X - rect.X;
+                rect.Height = e.Y - rect.Y;
             }
-            if(!SelectLine)
+            if (e.Button == MouseButtons.Left)// Если нажата левая кнопка мыши      
             {
-                DrawLine();
-            }
-            if (!SelectCircle)
-            {
-                DrawCircle();
-            }
-            else
-            {
-                points.SetPoint(e.X, e.Y);
-                if (points.GetCountPoints() >= 2)
+                try 
+                { 
+                // Если рисуем прямоугольник, отображаем заготовку прямоугольника пунктирными линиями
+                if (SelectRect)
                 {
+                    ControlPaint.DrawReversibleFrame(pictureBoxPaint.RectangleToScreen(rect),
+                        Color.Black, FrameStyle.Dashed);
+                    rect.Width = e.X - rect.X; // Получаем значение ширины прямоугольника
+                    rect.Height = e.Y - rect.Y; // Получаем значение высоты прямоугольника
+                    ControlPaint.DrawReversibleFrame(pictureBoxPaint.RectangleToScreen(rect),
+                        Color.Black, FrameStyle.Dashed);
+                    pictureBoxPaint.Refresh();
+                }
+                // Если рисуем линию, отображаем заготовку линии
+
+                if (SelectLine)
+                {
+                    // Отображаем заготовку линии до тех пор пока не отпустим левую кнопку мыши
+
+                    ControlPaint.DrawReversibleLine(pictureBoxPaint.PointToScreen(pointStart),
+                        pictureBoxPaint.PointToScreen(toPoint), Color.Black);
+                    toPoint = new Point(e.X, e.Y);
+                    ControlPaint.DrawReversibleLine(pictureBoxPaint.PointToScreen(pointStart),
+                       pictureBoxPaint.PointToScreen(toPoint), Color.Black);
+                    pictureBoxPaint.Refresh();
+                }
+                if (SelectCircle)
+                // Если рисуем окружность, отображаем заготовку окружности пунктирными линиями
+                {
+                    ControlPaint.DrawReversibleFrame(pictureBoxPaint.RectangleToScreen(rect),
+                        Color.Black, FrameStyle.Dashed);
+                    rect.Width = e.X - rect.X;
+                    rect.Height = e.Y - rect.Y;
+                    ControlPaint.DrawReversibleFrame(pictureBoxPaint.RectangleToScreen
+                        (rect),
+                        Color.Black, FrameStyle.Dashed);
+                    pictureBoxPaint.Refresh();
+                }
+                if(SelectPaint)
+                {
+                   points.SetPoint(e.X, e.Y);
+                if (points.GetCountPoints() >= 2)
+                   {
                     g.DrawLines(pen, points.GetPoints());
                     pictureBoxPaint.Image = bitmap;
                     points.SetPoint(e.X, e.Y);
+                   }
+                }
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
                 }
             }
+            
         }
         /// <summary>
         /// выход из приложения
@@ -210,22 +324,17 @@ namespace WinFormsApp30._06._22
         {
             toolTip1.SetToolTip(btnDrawCircle, "Нарисовать круг");
         }
-        Point pointStart=new Point();
-        Point pointEnd = new Point();
-        Rectangle rect = new Rectangle();
+        
         private void btnDrawCircle_Click(object sender, EventArgs e)
         {
             SelectCircle = true;
+            SelectLine = false;
+            SelectRect = false;
         }
-        private void DrawCircle()
-        {
-                 pictureBoxPaint.CreateGraphics().DrawEllipse(pen, rect.X= pointStart.X,
-                rect.Y= pointStart.Y,pointEnd.X-pointStart.X,pointEnd.X-pointStart.X);
-        }
-
+        
         private void pictureBoxPaint_MouseClick(object sender, MouseEventArgs e)
         {
-            //pointStart = e.Location;
+            
         }
 
         private void btnEraser_Click(object sender, EventArgs e)
@@ -251,22 +360,22 @@ namespace WinFormsApp30._06._22
 
         private void btnDrawLine_Click(object sender, EventArgs e)
         {
+            SelectCircle = false;
             SelectLine = true;
+            SelectRect = false;
         }
-        private void DrawLine()
-        {
-             pictureBoxPaint.CreateGraphics().DrawLine(pen, pointStart, pointEnd);
-        }
+        
 
         private void btnDrawRectangle_Click(object sender, EventArgs e)
         {
             SelectRect = true;
-            
+            SelectCircle = false;
+            SelectLine = false;
         }
-        private void DrawRect()
+        
+        private void pictureBoxPaint_Paint(object sender, PaintEventArgs e)
         {
-                pictureBoxPaint.CreateGraphics().DrawRectangle(pen, rect.X = pointStart.X,
-                rect.Y = pointEnd.Y, pointEnd.X - pointStart.X, pointEnd.Y - pointStart.Y);
+            
         }
     }
 }

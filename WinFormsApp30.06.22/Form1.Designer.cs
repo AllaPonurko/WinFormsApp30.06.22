@@ -79,6 +79,7 @@ namespace WinFormsApp30._06._22
             this.pictureBoxPaint.TabIndex = 0;
             this.pictureBoxPaint.TabStop = false;
             this.pictureBoxPaint.Click += new System.EventHandler(this.pictureBoxPaint_Click);
+            this.pictureBoxPaint.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxPaint_Paint);
             this.pictureBoxPaint.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseClick);
             this.pictureBoxPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseDown);
             this.pictureBoxPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseMove);
