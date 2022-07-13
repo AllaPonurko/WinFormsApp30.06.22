@@ -93,18 +93,36 @@ namespace WinFormsApp30._06._22
             points.ResetPoint();
             pointEnd = e.Location;
         }
+        private bool SelectRect = false;
+        private bool SelectLine = false;
+        private bool SelectCircle = false;
+        
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
         {
             if (!IsClamped) return;
-            points.SetPoint(e.X,e.Y);
-            if (points.GetCountPoints() >= 2)
-            { 
-                g.DrawLines(pen, points.GetPoints());
-                pictureBoxPaint.Image = bitmap;
-                points.SetPoint(e.X, e.Y);
+            if(!SelectRect)
+            {
+                DrawRect();
             }
-            
+            if(!SelectLine)
+            {
+                DrawLine();
+            }
+            if (!SelectCircle)
+            {
+                DrawCircle();
+            }
+            else
+            {
+                points.SetPoint(e.X, e.Y);
+                if (points.GetCountPoints() >= 2)
+                {
+                    g.DrawLines(pen, points.GetPoints());
+                    pictureBoxPaint.Image = bitmap;
+                    points.SetPoint(e.X, e.Y);
+                }
+            }
         }
         /// <summary>
         /// выход из приложения
@@ -197,11 +215,12 @@ namespace WinFormsApp30._06._22
         Rectangle rect = new Rectangle();
         private void btnDrawCircle_Click(object sender, EventArgs e)
         {
-            pictureBoxPaint_MouseClick(sender, (MouseEventArgs)e);
-           
-            pictureBoxPaint.CreateGraphics().DrawEllipse(pen, rect.X= pointStart.X,
+            SelectCircle = true;
+        }
+        private void DrawCircle()
+        {
+                 pictureBoxPaint.CreateGraphics().DrawEllipse(pen, rect.X= pointStart.X,
                 rect.Y= pointStart.Y,pointEnd.X-pointStart.X,pointEnd.X-pointStart.X);
-            
         }
 
         private void pictureBoxPaint_MouseClick(object sender, MouseEventArgs e)
@@ -232,12 +251,21 @@ namespace WinFormsApp30._06._22
 
         private void btnDrawLine_Click(object sender, EventArgs e)
         {
-            pictureBoxPaint.CreateGraphics().DrawLine(pen, pointStart, pointEnd);
+            SelectLine = true;
+        }
+        private void DrawLine()
+        {
+             pictureBoxPaint.CreateGraphics().DrawLine(pen, pointStart, pointEnd);
         }
 
         private void btnDrawRectangle_Click(object sender, EventArgs e)
         {
-            pictureBoxPaint.CreateGraphics().DrawRectangle(pen, rect.X = pointStart.X,
+            SelectRect = true;
+            
+        }
+        private void DrawRect()
+        {
+                pictureBoxPaint.CreateGraphics().DrawRectangle(pen, rect.X = pointStart.X,
                 rect.Y = pointEnd.Y, pointEnd.X - pointStart.X, pointEnd.Y - pointStart.Y);
         }
     }
