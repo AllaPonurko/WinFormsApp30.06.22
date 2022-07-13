@@ -29,9 +29,14 @@ namespace WinFormsApp30._06._22
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.pictureBoxPaint = new System.Windows.Forms.PictureBox();
             this.panelTools = new System.Windows.Forms.Panel();
+            this.btnEraser = new System.Windows.Forms.Button();
+            this.btnDrawLine = new System.Windows.Forms.Button();
+            this.btnDrawRectangle = new System.Windows.Forms.Button();
+            this.btnDrawCircle = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -58,6 +63,7 @@ namespace WinFormsApp30._06._22
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPaint)).BeginInit();
             this.panelTools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
@@ -73,6 +79,7 @@ namespace WinFormsApp30._06._22
             this.pictureBoxPaint.TabIndex = 0;
             this.pictureBoxPaint.TabStop = false;
             this.pictureBoxPaint.Click += new System.EventHandler(this.pictureBoxPaint_Click);
+            this.pictureBoxPaint.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseClick);
             this.pictureBoxPaint.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseDown);
             this.pictureBoxPaint.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseMove);
             this.pictureBoxPaint.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxPaint_MouseUp);
@@ -80,6 +87,10 @@ namespace WinFormsApp30._06._22
             // panelTools
             // 
             this.panelTools.AutoSize = true;
+            this.panelTools.Controls.Add(this.btnEraser);
+            this.panelTools.Controls.Add(this.btnDrawLine);
+            this.panelTools.Controls.Add(this.btnDrawRectangle);
+            this.panelTools.Controls.Add(this.btnDrawCircle);
             this.panelTools.Controls.Add(this.btnExit);
             this.panelTools.Controls.Add(this.btnClear);
             this.panelTools.Controls.Add(this.label1);
@@ -96,6 +107,55 @@ namespace WinFormsApp30._06._22
             this.panelTools.Name = "panelTools";
             this.panelTools.Size = new System.Drawing.Size(155, 427);
             this.panelTools.TabIndex = 1;
+            // 
+            // btnEraser
+            // 
+            this.btnEraser.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnEraser.ImageKey = "(нет)";
+            this.btnEraser.Location = new System.Drawing.Point(7, 162);
+            this.btnEraser.Name = "btnEraser";
+            this.btnEraser.Size = new System.Drawing.Size(34, 34);
+            this.btnEraser.TabIndex = 14;
+            this.btnEraser.Text = "\r\n";
+            this.btnEraser.UseVisualStyleBackColor = false;
+            this.btnEraser.Click += new System.EventHandler(this.btnEraser_Click);
+            this.btnEraser.MouseEnter += new System.EventHandler(this.btnEraser_MouseEnter);
+            // 
+            // btnDrawLine
+            // 
+            this.btnDrawLine.ImageKey = "(нет)";
+            this.btnDrawLine.Location = new System.Drawing.Point(7, 202);
+            this.btnDrawLine.Name = "btnDrawLine";
+            this.btnDrawLine.Size = new System.Drawing.Size(34, 34);
+            this.btnDrawLine.TabIndex = 13;
+            this.btnDrawLine.Text = "\r\n";
+            this.btnDrawLine.UseVisualStyleBackColor = true;
+            this.btnDrawLine.Click += new System.EventHandler(this.btnDrawLine_Click);
+            this.btnDrawLine.MouseEnter += new System.EventHandler(this.btnDrawLine_MouseEnter);
+            // 
+            // btnDrawRectangle
+            // 
+            this.btnDrawRectangle.ImageKey = "(нет)";
+            this.btnDrawRectangle.Location = new System.Drawing.Point(50, 162);
+            this.btnDrawRectangle.Name = "btnDrawRectangle";
+            this.btnDrawRectangle.Size = new System.Drawing.Size(34, 34);
+            this.btnDrawRectangle.TabIndex = 12;
+            this.btnDrawRectangle.Text = "\r\n";
+            this.btnDrawRectangle.UseVisualStyleBackColor = true;
+            this.btnDrawRectangle.Click += new System.EventHandler(this.btnDrawRectangle_Click);
+            this.btnDrawRectangle.MouseEnter += new System.EventHandler(this.btnDrawRectangle_MouseEnter);
+            // 
+            // btnDrawCircle
+            // 
+            this.btnDrawCircle.ImageKey = "(нет)";
+            this.btnDrawCircle.Location = new System.Drawing.Point(50, 202);
+            this.btnDrawCircle.Name = "btnDrawCircle";
+            this.btnDrawCircle.Size = new System.Drawing.Size(34, 34);
+            this.btnDrawCircle.TabIndex = 3;
+            this.btnDrawCircle.Text = "\r\n";
+            this.btnDrawCircle.UseVisualStyleBackColor = true;
+            this.btnDrawCircle.Click += new System.EventHandler(this.btnDrawCircle_Click);
+            this.btnDrawCircle.MouseEnter += new System.EventHandler(this.btnDrawCircle_MouseEnter);
             // 
             // btnExit
             // 
@@ -120,7 +180,7 @@ namespace WinFormsApp30._06._22
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 78);
+            this.label1.Location = new System.Drawing.Point(7, 107);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 15);
             this.label1.TabIndex = 9;
@@ -128,7 +188,7 @@ namespace WinFormsApp30._06._22
             // 
             // trackBar1
             // 
-            this.trackBar1.Location = new System.Drawing.Point(4, 111);
+            this.trackBar1.Location = new System.Drawing.Point(4, 125);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(136, 45);
             this.trackBar1.TabIndex = 8;
@@ -378,6 +438,11 @@ namespace WinFormsApp30._06._22
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button btnDrawCircle;
+        private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.Button btnEraser;
+        private System.Windows.Forms.Button btnDrawLine;
+        private System.Windows.Forms.Button btnDrawRectangle;
     }
 }
 

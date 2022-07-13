@@ -84,12 +84,14 @@ namespace WinFormsApp30._06._22
         private void pictureBoxPaint_MouseDown(object sender, MouseEventArgs e)
         {
             IsClamped = true;
+            pointStart = e.Location;
         }
 
         private void pictureBoxPaint_MouseUp(object sender, MouseEventArgs e)
         {
             IsClamped = false;
             points.ResetPoint();
+            pointEnd = e.Location;
         }
 
         private void pictureBoxPaint_MouseMove(object sender, MouseEventArgs e)
@@ -185,5 +187,59 @@ namespace WinFormsApp30._06._22
                 //this.Controls.Add(pictureBoxPaint);
             }
         }
+
+        private void btnDrawCircle_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(btnDrawCircle, "Нарисовать круг");
+        }
+        Point pointStart=new Point();
+        Point pointEnd = new Point();
+        Rectangle rect = new Rectangle();
+        private void btnDrawCircle_Click(object sender, EventArgs e)
+        {
+            pictureBoxPaint_MouseClick(sender, (MouseEventArgs)e);
+           
+            pictureBoxPaint.CreateGraphics().DrawEllipse(pen, rect.X= pointStart.X,
+                rect.Y= pointStart.Y,pointEnd.X-pointStart.X,pointEnd.X-pointStart.X);
+            
+        }
+
+        private void pictureBoxPaint_MouseClick(object sender, MouseEventArgs e)
+        {
+            //pointStart = e.Location;
+        }
+
+        private void btnEraser_Click(object sender, EventArgs e)
+        {
+            pen.Color = Color.White;
+            pen.Width = 5;
+        }
+
+        private void btnEraser_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(btnEraser, "Ластик");
+        }
+
+        private void btnDrawRectangle_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(btnDrawRectangle, "Нарисовать прямоугольник");
+        }
+
+        private void btnDrawLine_MouseEnter(object sender, EventArgs e)
+        {
+            toolTip1.SetToolTip(btnDrawLine, "Нарисовать линию");
+        }
+
+        private void btnDrawLine_Click(object sender, EventArgs e)
+        {
+            pictureBoxPaint.CreateGraphics().DrawLine(pen, pointStart, pointEnd);
+        }
+
+        private void btnDrawRectangle_Click(object sender, EventArgs e)
+        {
+            pictureBoxPaint.CreateGraphics().DrawRectangle(pen, rect.X = pointStart.X,
+                rect.Y = pointEnd.Y, pointEnd.X - pointStart.X, pointEnd.Y - pointStart.Y);
+        }
     }
 }
+
